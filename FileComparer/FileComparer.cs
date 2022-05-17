@@ -9,11 +9,9 @@ namespace FileComparer
     {
         public bool IsEqual(string path1, string path2)
         {
-            byte[] file1Bytes = getBytes(path1);
-            byte[] file2Bytes = getBytes(path2);
             SHA256 sha256 = SHA256.Create();
-            byte[] file1Hash = sha256.ComputeHash(file1Bytes);
-            byte[] file2Hash = sha256.ComputeHash(file2Bytes);
+            byte[] file1Hash = sha256.ComputeHash(getBytes(path1));
+            byte[] file2Hash = sha256.ComputeHash(getBytes(path2));
             if (file1Hash.Length != file2Hash.Length)
                 return false;
             for (int i = 0; i < file1Hash.Length; i++)
