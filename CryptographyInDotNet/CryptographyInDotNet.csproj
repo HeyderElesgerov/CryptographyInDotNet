@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\FileComparer\FileComparer.csproj" />
+      <ProjectReference Include="..\PasswordProtection\PasswordProtection.csproj" />
     </ItemGroup>
 
 </Project>

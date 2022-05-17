@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptographyInDotNet", "Cry
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileComparer", "FileComparer\FileComparer.csproj", "{867DB8D4-81FF-487C-8E06-F2423708393E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasswordProtection", "PasswordProtection\PasswordProtection.csproj", "{3B027127-AB14-4076-9529-891E437E3E52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{867DB8D4-81FF-487C-8E06-F2423708393E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{867DB8D4-81FF-487C-8E06-F2423708393E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{867DB8D4-81FF-487C-8E06-F2423708393E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B027127-AB14-4076-9529-891E437E3E52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B027127-AB14-4076-9529-891E437E3E52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B027127-AB14-4076-9529-891E437E3E52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B027127-AB14-4076-9529-891E437E3E52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
