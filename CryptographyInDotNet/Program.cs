@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
+using PasswordProtection;
+using FileComparer = FileComparer.FileComparer;
 
 namespace CryptographyInDotNet
 {
@@ -7,7 +9,6 @@ namespace CryptographyInDotNet
     {
         static void Main(string[] args)
         {
-            
         }
     }
 }
