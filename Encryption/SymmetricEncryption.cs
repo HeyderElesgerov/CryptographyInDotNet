@@ -12,51 +12,38 @@ namespace Encryption
             byte[] original = Encoding.UTF8.GetBytes(text);
             using var symmetricAlg = Aes.Create();
             using var encryptor = symmetricAlg.CreateEncryptor(key, iv);
-            string tempFilePath = Path.Combine(Directory.GetCurrentDirectory(), Guid.NewGuid() + ".txt");
-            using(var fs = new FileStream(tempFilePath, FileMode.Create))
-            {
-                using (var cryptoStream = new CryptoStream(fs, encryptor, CryptoStreamMode.Write))
-                {
-                    cryptoStream.Write(original, 0, original.Length);
-                }
-            }
-            using(var fs = new FileStream(tempFilePath, FileMode.Open))
-            {
-                byte[] data = new byte[fs.Length];
-                fs.Read(data, 0, (int)fs.Length);
-                fs.Dispose();
-                File.Delete(tempFilePath);
-                return Convert.ToBase64String(data);
-            }
+            byte[] encryptedData = Crypt(original, encryptor);
+            return Convert.ToBase64String(encryptedData);
         }
 
         public static string Decrypt(byte[] key, byte[] iv, string text)
         {
-            using (var symmetricAlg = Aes.Create())
-            {
-                using (var decrypt = symmetricAlg.CreateDecryptor(key, iv))
-                {
-                    string tempFilePath = Path.Combine(Directory.GetCurrentDirectory(), Guid.NewGuid() + ".txt");
-                    using (var fs = new FileStream(tempFilePath, FileMode.Create))
-                    {
-                        using (var cryptoStream = new CryptoStream(fs, decrypt, CryptoStreamMode.Write))
-                        {
-                            byte[] encryptedTextBytes = Convert.FromBase64String(text);
-                            cryptoStream.Write(encryptedTextBytes, 0, encryptedTextBytes.Length);
-                        }
-                    }
+            using var symmetricAlg = Aes.Create();
+            using var decrypt = symmetricAlg.CreateDecryptor(key, iv);
+            byte[] encryptedBytes = Convert.FromBase64String(text);
+            byte[] originalData = Crypt(encryptedBytes, decrypt);
+            return Encoding.UTF8.GetString(originalData);
+        }
 
-                    string decryptedText;
-                    using (var fs = new FileStream(tempFilePath, FileMode.Open))
-                    {
-                        byte[] data = new byte[fs.Length];
-                        fs.Read(data, 0, (int)fs.Length);
-                        decryptedText = Encoding.UTF8.GetString(data);
-                    }
-                    File.Delete(tempFilePath);
-                    return decryptedText;
+        public static byte[] Crypt(byte[] data, ICryptoTransform transform)
+        {
+            string path = Path.Combine(Environment.CurrentDirectory, Guid.NewGuid() + ".txt");
+            using (var fs = new FileStream(path, FileMode.Create))
+            {
+                using (var cs = new CryptoStream(fs, transform, CryptoStreamMode.Write))
+                {
+                    cs.Write(data);
                 }
             }
+
+            byte[] buffer;
+            using (var fs = new FileStream(path, FileMode.Open))
+            {
+                buffer = new byte[fs.Length];
+                fs.Read(buffer);
+            }
+            File.Delete(path);
+            return buffer;
         }
     }
 }
