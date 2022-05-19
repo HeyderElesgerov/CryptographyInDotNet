@@ -37,6 +37,7 @@ namespace Encryption
             byte[] encryptedBytes = Convert.FromBase64String(text);
             string path = GetRandomFilePath();
             File.WriteAllBytes(path, encryptedBytes);
+            string originalData;
             using (var fs = new FileStream(path, FileMode.Open))
             {
                 using (var cs = new CryptoStream(fs, decrypt, CryptoStreamMode.Read))
@@ -45,13 +46,13 @@ namespace Encryption
                     {
                         using (var sr = new StreamReader(ds))
                         {
-                            string originalData = sr.ReadToEnd();
-                            File.Delete(path);
-                            return originalData;
+                            originalData = sr.ReadToEnd();
                         }
                     }
                 }
             }
+            File.Delete(path);
+            return originalData;
         }
         private static string GetRandomFilePath() => Path.Combine(Environment.CurrentDirectory, Guid.NewGuid() + ".txt");
     }
