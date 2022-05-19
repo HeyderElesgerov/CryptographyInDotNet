@@ -22,7 +22,6 @@ namespace CryptographyInDotNet
         }
         static void Main(string[] args)
         {
-            ShowEncryptionAndDecryption("");
         }
     }
 }
