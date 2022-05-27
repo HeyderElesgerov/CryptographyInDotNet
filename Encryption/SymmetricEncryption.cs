@@ -10,16 +10,16 @@ namespace Encryption
         public static string Encrypt(string text, byte[] key, byte[] iv)
         {
             byte[] original = Encoding.UTF8.GetBytes(text);
-            using var symmetricAlg = Aes.Create();
-            using var encryptor = symmetricAlg.CreateEncryptor(key, iv);
+            using var aes = new AesCryptoServiceProvider();
+            using var encryptor = aes.CreateEncryptor(key, iv);
             byte[] encryptedData = Crypt(original, encryptor);
             return Convert.ToBase64String(encryptedData);
         }
 
         public static string Decrypt(byte[] key, byte[] iv, string text)
         {
-            using var symmetricAlg = Aes.Create();
-            using var decrypt = symmetricAlg.CreateDecryptor(key, iv);
+            using var aes = new AesCryptoServiceProvider();
+            using var decrypt = aes.CreateDecryptor(key, iv);
             byte[] encryptedBytes = Convert.FromBase64String(text);
             byte[] originalData = Crypt(encryptedBytes, decrypt);
             return Encoding.UTF8.GetString(originalData);

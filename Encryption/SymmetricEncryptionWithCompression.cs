@@ -11,7 +11,7 @@ namespace Encryption
         public static string Encrypt(string text, byte[] key, byte[] iv)
         {
             byte[] original = Encoding.UTF8.GetBytes(text);
-            using var symmetricAlg = Aes.Create();
+            using var symmetricAlg = new AesCryptoServiceProvider();
             using var encryptor = symmetricAlg.CreateEncryptor(key, iv);
             string path = GetRandomFilePath();
             using (var fs = new FileStream(path, FileMode.Create))
@@ -32,7 +32,7 @@ namespace Encryption
 
         public static string Decrypt(byte[] key, byte[] iv, string text)
         {
-            using var symmetricAlg = Aes.Create();
+            using var symmetricAlg = new AesCryptoServiceProvider();
             using var decrypt = symmetricAlg.CreateDecryptor(key, iv);
             byte[] encryptedBytes = Convert.FromBase64String(text);
             string path = GetRandomFilePath();
