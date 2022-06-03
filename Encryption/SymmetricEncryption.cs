@@ -7,8 +7,9 @@ namespace Encryption
 {
     public static class SymmetricEncryption
     {
-        public static string Encrypt(string text, byte[] key, byte[] iv)
+        public static string Encrypt(string password, string text, byte[] iv)
         {
+            byte[] key = GetKeyFromPassword(password);
             byte[] original = Encoding.UTF8.GetBytes(text);
             using var aes = new AesCryptoServiceProvider();
             using var encryptor = aes.CreateEncryptor(key, iv);
@@ -16,8 +17,9 @@ namespace Encryption
             return Convert.ToBase64String(encryptedData);
         }
 
-        public static string Decrypt(byte[] key, byte[] iv, string text)
+        public static string Decrypt(string password, byte[] iv, string text)
         {
+            byte[] key = GetKeyFromPassword(password);
             using var aes = new AesCryptoServiceProvider();
             using var decrypt = aes.CreateDecryptor(key, iv);
             byte[] encryptedBytes = Convert.FromBase64String(text);
@@ -44,6 +46,12 @@ namespace Encryption
             }
             File.Delete(path);
             return buffer;
+        }
+
+        private static byte[] GetKeyFromPassword(string password)
+        {
+            using var pbkdf = new Rfc2898DeriveBytes(password, new byte[8], 5000, HashAlgorithmName.SHA256);
+            return pbkdf.GetBytes(16);
         }
     }
 }

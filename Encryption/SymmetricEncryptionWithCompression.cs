@@ -8,11 +8,11 @@ namespace Encryption
 {
     public class SymmetricEncryptionWithCompression
     {
-        public static string Encrypt(string text, byte[] key, byte[] iv)
+        public static string Encrypt(string password, string text, byte[] iv)
         {
             byte[] original = Encoding.UTF8.GetBytes(text);
             using var symmetricAlg = new AesCryptoServiceProvider();
-            using var encryptor = symmetricAlg.CreateEncryptor(key, iv);
+            using var encryptor = symmetricAlg.CreateEncryptor(GetKeyFromPassword(password), iv);
             string path = GetRandomFilePath();
             using (var fs = new FileStream(path, FileMode.Create))
             {
@@ -30,10 +30,10 @@ namespace Encryption
             return Convert.ToBase64String(buffer);
         }
 
-        public static string Decrypt(byte[] key, byte[] iv, string text)
+        public static string Decrypt(string password, byte[] iv, string text)
         {
             using var symmetricAlg = new AesCryptoServiceProvider();
-            using var decrypt = symmetricAlg.CreateDecryptor(key, iv);
+            using var decrypt = symmetricAlg.CreateDecryptor(GetKeyFromPassword(password), iv);
             byte[] encryptedBytes = Convert.FromBase64String(text);
             string path = GetRandomFilePath();
             File.WriteAllBytes(path, encryptedBytes);
@@ -55,5 +55,10 @@ namespace Encryption
             return originalData;
         }
         private static string GetRandomFilePath() => Path.Combine(Environment.CurrentDirectory, Guid.NewGuid() + ".txt");
+        private static byte[] GetKeyFromPassword(string password)
+        {
+            using var pbkdf = new Rfc2898DeriveBytes(password, new byte[8], 5000, HashAlgorithmName.SHA256);
+            return pbkdf.GetBytes(16);
+        }
     }
 }
