@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasswordProtection", "Passw
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Encryption", "Encryption\Encryption.csproj", "{BE41EEA6-E225-4383-B9AC-372A8DE5FDBD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlEncryption", "XmlEncryption\XmlEncryption.csproj", "{253F3059-227A-4094-807A-C3BF62F4640C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{BE41EEA6-E225-4383-B9AC-372A8DE5FDBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE41EEA6-E225-4383-B9AC-372A8DE5FDBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE41EEA6-E225-4383-B9AC-372A8DE5FDBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{253F3059-227A-4094-807A-C3BF62F4640C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{253F3059-227A-4094-807A-C3BF62F4640C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{253F3059-227A-4094-807A-C3BF62F4640C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{253F3059-227A-4094-807A-C3BF62F4640C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
